@@ -1,0 +1,18 @@
+<!-- <h1>I am Back</h1> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your QuerySet Data</title>
+</head>
+<body>
+    <h1>Your QuerySet Data</h1>
+    <ul>
+        {% for item in query_set %}
+            <li>{{ item.first_name }}</li>
+        {% empty %}
+            <li>No items found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
