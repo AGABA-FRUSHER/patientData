@@ -21,7 +21,7 @@ class RegisteredPatientDetailViewset(viewsets.ModelViewSet):
 
 
 class LabTestViewset(viewsets.ModelViewSet):
-    queryset = LabTest.objects.all()
+    queryset = LabTest.objects.all().order_by('id')
     serializer_class = LabTestSerializer
 
     def create(self, request, *args, **kwargs):

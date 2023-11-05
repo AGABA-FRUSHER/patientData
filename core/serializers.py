@@ -59,23 +59,34 @@ class PatientLabTestSerializer(serializers.ModelSerializer):
     created_by = SytemUserSerializer()
     class Meta:
         model = PatientLabTest
-        fields = [
-            'parent_id',
-            'lab_test',
-            'patient_details',
-            'created_by',
-            'date_created',
-            'result',
-            'id',
-
-        ]
+        fields = '__all__'
+        # fields = [
+        #     'parent_id',
+        #     'lab_test',
+        #     'patient_details',
+        #     'created_by',
+        #     'date_created',
+        #     'result',
+        #     'id',
+        # ]
     def get_patient_details(self, obj):
         registered_patient_detail = obj.encounter.clinic_session.patient_visit.patient.registeredpatientdetail
         return {
-            'full_name': f"{registered_patient_detail.first_name} {registered_patient_detail.last_name}",
+            'first_name': registered_patient_detail.first_name,
             'patient_id': registered_patient_detail.patient_id,
             'birth_date': registered_patient_detail.birth_date,
-            'gender': registered_patient_detail.gender,
+            'id': registered_patient_detail.id,
+            'date_created': registered_patient_detail.date_created,
+            'id_no': registered_patient_detail.id_no,
+            'last_name': registered_patient_detail.last_name,
+            'last_updated': registered_patient_detail.last_updated,
+            'marital_status': registered_patient_detail.marital_status,
+            # 'nationality': registered_patient_detail.nationality,
+            'other_name': registered_patient_detail.other_name,
+            'sub_location': registered_patient_detail.sub_location,
+            'village': registered_patient_detail.village,
+            'ethnicity': registered_patient_detail.ethnicity,
+            
         }
 
 
