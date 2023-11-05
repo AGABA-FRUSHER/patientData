@@ -37,7 +37,7 @@ class RegisteredPatientDetailSerializer(serializers.ModelSerializer):
 class LabTestSerializer(serializers.ModelSerializer):
     class Meta:
         model = LabTest
-        fields = ['name']
+        fields = '__all__'
 
 
 class PatientLabTestSerializer(serializers.ModelSerializer):

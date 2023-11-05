@@ -5186,9 +5186,9 @@ class LabTest(models.Model):
     lab_test_worksheet = models.ForeignKey('LabTestWorksheet', models.DO_NOTHING, blank=True, null=True)
     processing_hour_type = models.CharField(max_length=255, blank=True, null=True)
     processing_time = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
-    code = models.CharField(max_length=255, blank=True, null=True)
-    code_name = models.CharField(max_length=255, blank=True, null=True)
-    code_url = models.CharField(max_length=255, blank=True, null=True)
+    # code = models.CharField(max_length=255, blank=True, null=True)
+    # code_name = models.CharField(max_length=255, blank=True, null=True)
+    # code_url = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -6981,13 +6981,13 @@ class PatientLabTest(models.Model):
     sample_rejection_location = models.CharField(max_length=255, blank=True, null=True)
     test_unit = models.CharField(max_length=255, blank=True, null=True)
     testing_location = models.CharField(max_length=255, blank=True, null=True)
-    high_range = models.CharField(max_length=255, blank=True, null=True)
-    low_range = models.CharField(max_length=255, blank=True, null=True)
+    # high_range = models.CharField(max_length=255, blank=True, null=True)
+    # low_range = models.CharField(max_length=255, blank=True, null=True)
     # sample_type = models.CharField(max_length=255, blank=True, null=True)
     # code = models.CharField(max_length=255, blank=True, null=True)
     # code_name = models.CharField(max_length=255, blank=True, null=True)
     # code_url = models.CharField(max_length=255, blank=True, null=True)
-    lab_ext_id = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
+    # lab_ext_id = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False

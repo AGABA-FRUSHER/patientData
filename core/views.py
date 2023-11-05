@@ -40,18 +40,18 @@ class PatientLabTestViewset(viewsets.ModelViewSet):
     serializer_class = PatientLabTestSerializer
     filter_class = PatientLabTestFilter
     page_size = 10
-    def get_queryset(self):
-        queryset = PatientLabTest.objects.all().order_by('-date_created')
+    # def get_queryset(self):
+        # queryset = PatientLabTest.objects.all().order_by('-date_created')
 
-        since_param = self.request.query_params.get('since')
-        if since_param:
-            try:
-                since_datetime = timezone.datetime.fromisoformat(since_param)
-                queryset = queryset.filter(date_created__gte=since_datetime)
-            except ValueError:
-                pass
+        # since_param = self.request.query_params.get('since')
+        # if since_param:
+        #     try:
+        #         since_datetime = timezone.datetime.fromisoformat(since_param)
+        #         queryset = queryset.filter(date_created__gte=since_datetime)
+        #     except ValueError:
+        #         pass
 
-        return queryset
+        # return queryset
     
     def update(self, request, pk=None):
         try:
