@@ -86,7 +86,7 @@ class PatientLabTestSerializer(serializers.ModelSerializer):
             'sub_location': registered_patient_detail.sub_location,
             'village': registered_patient_detail.village,
             'ethnicity': registered_patient_detail.ethnicity,
-            
+            'gender': registered_patient_detail.gender,
         }
 
 
