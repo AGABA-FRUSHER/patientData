@@ -24,14 +24,14 @@ class LabTestViewset(viewsets.ModelViewSet):
     queryset = LabTest.objects.all()
     serializer_class = LabTestSerializer
 
-    # def create(self, request, *args, **kwargs):
-    #     lab_test_instance = request.data
-    #     serializer = self.get_serializer(data=lab_test_instance)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
+        lab_test_instance = request.data
+        serializer = self.get_serializer(data=lab_test_instance)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PatientLabTestViewset(viewsets.ModelViewSet):
@@ -40,18 +40,18 @@ class PatientLabTestViewset(viewsets.ModelViewSet):
     serializer_class = PatientLabTestSerializer
     filter_class = PatientLabTestFilter
     page_size = 10
-    # def get_queryset(self):
-        # queryset = PatientLabTest.objects.all().order_by('-date_created')
+    def get_queryset(self):
+        queryset = PatientLabTest.objects.all().order_by('-date_created')
 
-        # since_param = self.request.query_params.get('since')
-        # if since_param:
-        #     try:
-        #         since_datetime = timezone.datetime.fromisoformat(since_param)
-        #         queryset = queryset.filter(date_created__gte=since_datetime)
-        #     except ValueError:
-        #         pass
+        since_param = self.request.query_params.get('since')
+        if since_param:
+            try:
+                since_datetime = timezone.datetime.fromisoformat(since_param)
+                queryset = queryset.filter(date_created__gte=since_datetime)
+            except ValueError:
+                pass
 
-        # return queryset
+        return queryset
     
     def update(self, request, pk=None):
         try:
