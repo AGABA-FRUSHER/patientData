@@ -6932,13 +6932,13 @@ class PatientInsuranceReference(models.Model):
 
 class PatientLabTest(models.Model):
     id = models.BigAutoField(primary_key=True)
-    version = models.BigIntegerField()
+    # version = models.BigIntegerField()
     annulled_at = models.DateTimeField(blank=True, null=True)
     annulled_by = models.ForeignKey('SystemUser', models.DO_NOTHING, blank=True, null=True, related_name='patient_lab_test_annulled_by')
     attended_by = models.ForeignKey('SystemUser', models.DO_NOTHING, blank=True, null=True, related_name='patient_lab_test_attended_by')
-    branch = models.ForeignKey(Branch, models.DO_NOTHING)
+    # branch = models.ForeignKey(Branch, models.DO_NOTHING)
     clinical_note = models.TextField(blank=True, null=True)
-    company = models.ForeignKey(Company, models.DO_NOTHING)
+    # company = models.ForeignKey(Company, models.DO_NOTHING)
     conclusion = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey('SystemUser', models.DO_NOTHING, related_name='patient_lab_test_created_by')
     date_created = models.DateTimeField(blank=True, null=True)
@@ -6983,10 +6983,10 @@ class PatientLabTest(models.Model):
     testing_location = models.CharField(max_length=255, blank=True, null=True)
     high_range = models.CharField(max_length=255, blank=True, null=True)
     low_range = models.CharField(max_length=255, blank=True, null=True)
-    sample_type = models.CharField(max_length=255, blank=True, null=True)
-    code = models.CharField(max_length=255, blank=True, null=True)
-    code_name = models.CharField(max_length=255, blank=True, null=True)
-    code_url = models.CharField(max_length=255, blank=True, null=True)
+    # sample_type = models.CharField(max_length=255, blank=True, null=True)
+    # code = models.CharField(max_length=255, blank=True, null=True)
+    # code_name = models.CharField(max_length=255, blank=True, null=True)
+    # code_url = models.CharField(max_length=255, blank=True, null=True)
     lab_ext_id = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
 
     class Meta:
@@ -8262,6 +8262,30 @@ class RefundRequest(models.Model):
     class Meta:
         managed = False
         db_table = 'refund_request'
+# class RegisteredPatientDetail(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     version = models.BigIntegerField()
+#     birth_date = models.DateTimeField()
+#     date_created = models.DateTimeField(blank=True, null=True)
+#     first_name = models.CharField(max_length=255)
+#     gender = models.CharField(max_length=6)
+#     geo_area_level5 = models.ForeignKey(GeoAreaLevel5, models.DO_NOTHING, blank=True, null=True)
+#     id_no = models.CharField(unique=True, max_length=255, blank=True, null=True)
+#     last_name = models.CharField(max_length=255, blank=True, null=True)
+#     last_updated = models.DateTimeField(blank=True, null=True)
+#     marital_status = models.CharField(max_length=9, blank=True, null=True)
+#     nationality = models.ForeignKey(Country, models.DO_NOTHING)
+#     other_name = models.CharField(max_length=255, blank=True, null=True)
+#     patient = models.OneToOneField(Patient, models.DO_NOTHING)
+#     patient_image = models.ForeignKey('SystemFile', models.DO_NOTHING, blank=True, null=True)
+#     sub_location = models.CharField(max_length=255, blank=True, null=True)
+#     village = models.CharField(max_length=255, blank=True, null=True)
+#     ethnicity = models.CharField(max_length=5, blank=True, null=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'registered_patient_detail'
+
 class RegisteredPatientDetail(models.Model):
     id = models.BigAutoField(primary_key=True)
     version = models.BigIntegerField()
@@ -8277,31 +8301,7 @@ class RegisteredPatientDetail(models.Model):
     nationality = models.ForeignKey(Country, models.DO_NOTHING)
     other_name = models.CharField(max_length=255, blank=True, null=True)
     patient = models.OneToOneField(Patient, models.DO_NOTHING)
-    patient_image = models.ForeignKey('SystemFile', models.DO_NOTHING, blank=True, null=True)
-    sub_location = models.CharField(max_length=255, blank=True, null=True)
-    village = models.CharField(max_length=255, blank=True, null=True)
-    ethnicity = models.CharField(max_length=5, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'registered_patient_detail'
-
-class RegisteredPatientDetail(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    version = models.BigIntegerField()
-    birth_date = models.DateTimeField()
-    date_created = models.DateTimeField(blank=True, null=True)
-    first_name = models.CharField(max_length=255)
-    gender = models.CharField(max_length=6)
-    geo_area_level5 = models.ForeignKey(GeoAreaLevel5, models.DO_NOTHING, blank=True, null=True)
-    id_no = models.CharField(unique=True, max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
-    last_updated = models.DateTimeField(blank=True, null=True)
-    marital_status = models.CharField(max_length=9, blank=True, null=True)
-    nationality = models.ForeignKey(Country, models.DO_NOTHING)
-    other_name = models.CharField(max_length=255, blank=True, null=True)
-    patient = models.OneToOneField(Patient, models.DO_NOTHING)
-    patient_image = models.ForeignKey('SystemFile', models.DO_NOTHING, blank=True, null=True)
+    # patient_image = models.ForeignKey('SystemFile', models.DO_NOTHING, blank=True, null=True)
     sub_location = models.CharField(max_length=255, blank=True, null=True)
     village = models.CharField(max_length=255, blank=True, null=True)
     ethnicity = models.CharField(max_length=5, blank=True, null=True)
