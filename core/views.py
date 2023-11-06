@@ -3,7 +3,7 @@ from Registry.models import LabTest, RegisteredPatientDetail, PatientLabTest
 from core.filters import PatientLabTestFilter
 from rest_framework import viewsets, status
 from .models import Registry
-from .serializers import LabTestSerializer, RegisteredPatientDetailSerializer, RegisteredPatientDetailSimpleSerializer, RegistrySerializer, PatientLabTestSerializer
+from .serializers import LabTestSerializer, PatientLabTestResultSerializer, RegisteredPatientDetailSerializer, RegisteredPatientDetailSimpleSerializer, RegistrySerializer, PatientLabTestSerializer
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.utils import timezone
@@ -83,3 +83,17 @@ class RegisteredPatientDetailSimpleViewset(viewsets.ModelViewSet):
     serializer_class = RegisteredPatientDetailSimpleSerializer
     pagination_class = PageNumberPagination
 
+
+class PatientLabTestResultViewSet(viewsets.ModelViewSet):
+    queryset = PatientLabTest.objects.all()
+    serializer_class = PatientLabTestResultSerializer
+
+    def update(self, request, *args, **kwargs):
+        lab_test_result = self.get_object()
+        if lab_test_result.result is None:
+            serializer = self.get_serializer(lab_test_result, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response({'detail': 'Lab test result cannot be updated.'}, status=status.HTTP_400_BAD_REQUEST)

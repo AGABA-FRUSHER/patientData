@@ -93,8 +93,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('PG_NAME', 'eafyadb'),
         'USER': config('PG_USER', 'postgres'),
-        'PASSWORD': config('PG_PASSWORD', 'password'),
-        'HOST': config('PG_HOST', '172.17.0.3'),
+        'PASSWORD': config('PG_PASSWORD', 'postgres123'),
+        # 'HOST': config('PG_HOST', '172.17.0.3'),
+        'HOST': config('PG_HOST', 'localhost'),
         'PORT': '5432',
     }
 }

@@ -81,7 +81,7 @@ class PatientLabTestSerializer(serializers.ModelSerializer):
             'last_name': registered_patient_detail.last_name,
             'last_updated': registered_patient_detail.last_updated,
             'marital_status': registered_patient_detail.marital_status,
-            # 'nationality': registered_patient_detail.nationality,
+            'nationality': registered_patient_detail.nationality.name,
             'other_name': registered_patient_detail.other_name,
             'sub_location': registered_patient_detail.sub_location,
             'village': registered_patient_detail.village,
@@ -144,5 +144,14 @@ class RegisteredPatientDetailSimpleSerializer(serializers.ModelSerializer):
         lab_tests = PatientLabTest.objects.filter(encounter__clinic_session__patient_visit__patient_id=obj.patient_id)
 
         return PatientLabSerializer(lab_tests, many=True, context=self.context).data
+    
+
+class PatientLabTestResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PatientLabTest
+        fields = [
+            'id',
+            'result'
+        ]
 
 
