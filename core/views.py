@@ -42,7 +42,7 @@ class PatientLabTestViewset(viewsets.ModelViewSet):
     filter_class = PatientLabTestFilter
     page_size = 10
     def get_queryset(self):
-        queryset = PatientLabTest.objects.all().order_by('-date_created')
+        queryset = PatientLabTest.objects.filter(parent_id=0).order_by('-date_created')
 
         since_param = self.request.query_params.get('since')
         if since_param:
