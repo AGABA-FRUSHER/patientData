@@ -153,7 +153,8 @@ class PatientLabTestResultSerializer(serializers.ModelSerializer):
             'id',
             'result',
             'parent_id',
-            'lab_test'
+            'lab_test',
+            'status'
         ]
 
 

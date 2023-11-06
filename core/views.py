@@ -100,7 +100,9 @@ class PatientLabTestResultViewSet(viewsets.ModelViewSet):
                 )
                 print('*'*100, patient_lab_test.query)
 
-                patient_lab_test.update(result=result['result'])
+                # patient_lab_test.update(result=result['result'])
+                patient_lab_test.update(result=result['result'], status='Tested')
+                print(result, results, '#'*100)
 
             return Response({'message': 'Lab test result updated successfully.'}, status=status.HTTP_200_OK)
 
