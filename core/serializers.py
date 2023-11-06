@@ -151,7 +151,9 @@ class PatientLabTestResultSerializer(serializers.ModelSerializer):
         model = PatientLabTest
         fields = [
             'id',
-            'result'
+            'result',
+            'parent_id',
+            'lab_test'
         ]
 
 

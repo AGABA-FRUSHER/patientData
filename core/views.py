@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
+from django.db.models import Q
 
 
 class RegistryViewSet(viewsets.ModelViewSet):
@@ -88,12 +89,21 @@ class PatientLabTestResultViewSet(viewsets.ModelViewSet):
     queryset = PatientLabTest.objects.all()
     serializer_class = PatientLabTestResultSerializer
 
-    def update(self, request, *args, **kwargs):
-        lab_test_result = self.get_object()
-        if lab_test_result.result is None:
-            serializer = self.get_serializer(lab_test_result, data=request.data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response({'detail': 'Lab test result cannot be updated.'}, status=status.HTTP_400_BAD_REQUEST)
+    def update(self, request, pk=None):
+        try:
+            patient_lab_test_id = pk
+            results = request.data
+            for result in results:
+                patient_lab_test = PatientLabTest.objects.filter(
+                    (Q(id=patient_lab_test_id) | Q(parent_id=patient_lab_test_id)) &
+                    Q(lab_test=result['lab_test_id'])
+                )
+                print('*'*100, patient_lab_test.query)
+
+                patient_lab_test.update(result=result['result'])
+
+            return Response({'message': 'Lab test result updated successfully.'}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
