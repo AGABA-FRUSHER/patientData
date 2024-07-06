@@ -6,7 +6,9 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+import uuid
+import random
+import string
 
 class AccountType(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -4015,7 +4017,7 @@ class GeoAreaLevel4(models.Model):
 
 class GeoAreaLevel5(models.Model):
     id = models.BigAutoField(primary_key=True)
-    version = models.BigIntegerField()
+    version = models.BigIntegerField(default=0)
     created_by = models.ForeignKey('SystemUser', models.DO_NOTHING)
     date_created = models.DateTimeField(blank=True, null=True)
     geo_area_level4 = models.ForeignKey(GeoAreaLevel4, models.DO_NOTHING)
@@ -4749,10 +4751,18 @@ class InvoicePayrollBreakdown(models.Model):
 class InvoiceReceipt(models.Model):
     id = models.BigAutoField(primary_key=True)
     version = models.BigIntegerField()
+    prn = models.BigIntegerField(blank=True,null=True,default=None)
+    bank_branch = models.CharField(max_length=255, null=True, blank=True, default=None)
+    bank_transaction_id = models.FloatField(blank=True, null=True, default=None)
+    bank = models.ForeignKey(Bank, models.DO_NOTHING, blank=True,null=True,default=None)
+    signature = models.ImageField(upload_to='signature_images/', blank=True, null=True)
+    currency_code = models.CharField(max_length=255, blank=True, null=True)
+    paymentStatus = models.CharField(max_length=255, blank=True, null=True)
+    bank_code = models.CharField(max_length=255, blank=True, null=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
-    branch = models.ForeignKey(Branch, models.DO_NOTHING)
-    company = models.ForeignKey(Company, models.DO_NOTHING)
-    created_by = models.ForeignKey('SystemUser', models.DO_NOTHING)
+    branch = models.ForeignKey(Branch, models.DO_NOTHING, null=True, blank=True, default=None)
+    company = models.ForeignKey(Company, models.DO_NOTHING, null=True, blank=True, default=None)
+    created_by = models.ForeignKey('SystemUser', models.DO_NOTHING, null=True, blank=True, default=None)
     credited_account = models.ForeignKey(GeneralJournal, models.DO_NOTHING, blank=True, null=True,related_name='credited_receipts')
     date_created = models.DateTimeField(blank=True, null=True)
     debited_account = models.ForeignKey(GeneralJournal, models.DO_NOTHING, blank=True, null=True, related_name='debited_receipts' )
@@ -4768,7 +4778,7 @@ class InvoiceReceipt(models.Model):
     void_status = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'invoice_receipt'
 
 
@@ -6388,22 +6398,29 @@ class Patient(models.Model):
     id = models.CharField(primary_key=True, max_length=255)
     version = models.BigIntegerField()
     address = models.CharField(max_length=255, blank=True, null=True)
-    branch = models.ForeignKey(Branch, models.DO_NOTHING)
+    branch = models.ForeignKey(Branch, models.CASCADE, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
-    company = models.ForeignKey(Company, models.DO_NOTHING)
-    created_by = models.ForeignKey('SystemUser', models.DO_NOTHING, related_name='created_patients')
+    company = models.ForeignKey(Company, models.DO_NOTHING, blank=True, null=True)
+    created_by = models.ForeignKey('SystemUser', models.DO_NOTHING, related_name='created_patients', blank=True, null=True)
     date_created = models.DateTimeField(blank=True, null=True)
     debtor_account = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
     email = models.CharField(unique=True, max_length=255, blank=True, null=True)
     employee_account = models.ForeignKey('SystemUser', models.DO_NOTHING, related_name='employee_account_patients', blank=True, null=True)
     last_updated = models.DateTimeField(blank=True, null=True)
-    partner_type = models.CharField(max_length=18)
-    phone_number = models.CharField(max_length=255)
+    partner_type = models.CharField(max_length=18, blank=True, null=True)
+    phone_number = models.CharField(max_length=255, blank=True, null=True)
     postal_code = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'patient'
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            unique_identifier = str(uuid.uuid4().fields[-1])[:4]
+            random_suffix = ''.join(random.choices(string.ascii_uppercase, k=2))
+            self.id = f"ZZ-{unique_identifier}-{random_suffix}"
+        super().save(*args, **kwargs)
 
 
 class PatientAdmission(models.Model):
@@ -8288,7 +8305,7 @@ class RefundRequest(models.Model):
 
 class RegisteredPatientDetail(models.Model):
     id = models.BigAutoField(primary_key=True)
-    version = models.BigIntegerField()
+    version = models.BigIntegerField(default=0, null=False)
     birth_date = models.DateTimeField()
     date_created = models.DateTimeField(blank=True, null=True)
     first_name = models.CharField(max_length=255)
@@ -8309,6 +8326,12 @@ class RegisteredPatientDetail(models.Model):
     class Meta:
         managed = False
         db_table = 'registered_patient_detail'
+
+    def save(self, *args, **kwargs):
+        if not self.patient_id:
+            patient = Patient.objects.create()
+            self.patient = patient
+        super().save(*args, **kwargs)
 
 
 class RelationshipType(models.Model):
