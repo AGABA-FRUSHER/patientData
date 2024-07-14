@@ -1,0 +1,139 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+*.pot
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Django migrations
+**/migrations/*
+!**/migrations/__init__.py
+
+# Static files
+staticfiles/
+static/
+
+# Media files
+media/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# VS Code
+.vscode/
+
+# Pycharm
+.idea/
+
+# Docker
+*.env
+.env.*
+.envrc
+docker-compose.yml
+Dockerfile
+
+# Other project specific files
+celerybeat-schedule
+*.pid
+*.seed
+
+# Other editor-specific files
+*~
+.project
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.sublime-project
+*.sublime-workspace
+
+# Backup files
+*.bak
+
+# Logs
+*.log
+*.out
+*.err
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Temporary files
+*.tmp
+*.temp
+*.~temp~
+*.tmp
+*.temp
+*.~temp~
